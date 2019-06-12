@@ -47,6 +47,7 @@ public class SkuInfo  implements Serializable {
     List<SkuSaleAttrValue> skuSaleAttrValueList;
 
 
+
     public String getId() {
         return id;
     }

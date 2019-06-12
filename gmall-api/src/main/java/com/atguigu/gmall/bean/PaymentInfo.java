@@ -1,8 +1,9 @@
 package com.atguigu.gmall.bean;
 
+import com.atguigu.gmall.bean.enums.PaymentStatus;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * @param
  * @return
  */
-public class PaymentInfo implements Serializable{
+public class PaymentInfo {
 
     @Column
     @Id

@@ -1,6 +1,8 @@
 package com.atguigu.gmall.bean;
 
+import com.atguigu.gmall.bean.enums.OrderStatus;
 import com.atguigu.gmall.bean.enums.PaymentWay;
+import com.atguigu.gmall.bean.enums.ProcessStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
