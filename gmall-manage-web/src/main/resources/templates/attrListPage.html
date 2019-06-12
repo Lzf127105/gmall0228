@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table id="dg" class="easyui-datagrid"
+           data-options="toolbar: '#tb',fitColumns:true,singleSelect:true">
+        <thead>
+        <tr>
+            <th data-options="field:'id',width:100">属性编号</th>
+            <th data-options="field:'attrName',width:100">属性名称</th>
+        </tr>
+        </thead>
+    </table>
+
+    <div id="tb">
+        <br/>
+        <a href="javascript:addAttrInfo();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        <br/>
+        <div>
+            一级分类:<select id="ctg1ForAttrList" data-options="onSelect: function(param){
+                                                                    var url = 'getCatalog2?catalog1Id='+param.id;
+                                                                    $('#ctg2ForAttrList').combobox('clear');
+                                                                    $('#ctg2ForAttrList').combobox('reload', url);
+                                                        }
+                    ,valueField:'id',textField:'name',url:'getCatalog1'" class="easyui-combobox" name="state"  style="width:100px;">
+                    </select>
+
+            二级分类:<select data-options="onSelect: function(param){
+                                                                    var url = 'getCatalog3?catalog2Id='+param.id;
+                                                                    $('#ctg3ForAttrList').combobox('clear');
+                                                                    $('#ctg3ForAttrList').combobox('reload', url);
+                                                        }
+                    ,valueField:'id',textField:'name'" name="ctg2ForAttrList" id="ctg2ForAttrList" class="easyui-combobox" name="state"  style="width:100px;">
+                    </select>
+
+            三级分类:<select data-options="valueField:'id',textField:'name'" name="ctg3ForAttrList" id="ctg3ForAttrList" class="easyui-combobox" name="state"  style="width:100px;">
+                    </select>
+
+            <a href="javascript:getAttrList();" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
+        </div>
+    </div>
+
+    <div th:include="attrInfoPage"></div>
+
+
+    <script language="JavaScript">
+        function getAttrList() {
+            catalog3Id = $("#ctg3ForAttrList").combobox("getValue");
+            $("#dg").datagrid({url:"getAttrListByCtg3?catalog3Id="+catalog3Id});
+        }
+        
+        function addAttrInfo() {
+            catalog3Id = $("#ctg3ForAttrList").combobox("getValue");
+            if(catalog3Id){
+                $("#dlg").dialog("open");
+
+                // 初始化属性添加表格
+                initAttrValueDatagrid();
+            }else{
+                alert("请选择三级分类");
+            }
+        }
+    </script>
+</body>
+</html>

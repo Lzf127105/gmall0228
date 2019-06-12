@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="dlg" class="easyui-dialog" title="编辑属性" style="width:600px;height:500px;"
+     closed="true"  data-options="iconCls:'icon-save',resizable:true,modal:true" buttons="#bb" >
+    <form id="attrForm">
+        <br/>
+        <label>属性名称:</label>
+        <input  id="attrName" name="attrName" class="easyui-textbox" data-options="" style="width:100px"/>
+        <input  id="attrId" name="attrId" type="hidden"  />
+        <br/><br/>
+        <table id="dg_av" class="easyui-datagrid" title="属性值列表"></table>
+    </form>
+</div>
+
+<div id="bb">
+    <a href="#" class="easyui-linkbutton" onclick="saveAttr()">保存</a>
+    <a href="#" class="easyui-linkbutton">关闭</a>
+</div>
+
+
+
+<script language="JavaScript">
+        
+        function initAttrValueDatagrid() {
+            d = $('#dg_av').datagrid({
+                columns:[[
+                    {field:'id',title:'属性编号',width:100},
+                    {field:'attrName',title:'属性名称',width:200,
+                        editor:{
+                            type:"validatebox",options:{required:true}
+                        }
+                    }
+                ]],
+                toolbar: [{
+                    iconCls: 'icon-add',
+                    handler: function(){
+                        // 添加datagrid一行
+                        d.datagrid('appendRow',{
+                            id: '',
+                            attrName: '默认属性名'
+                        });
+                    }
+                },'-',{
+                    iconCls: 'icon-remove',
+                    handler: function(){
+                        // 获得选中行
+                        var row = d.datagrid('getSelected');
+                        // 根据选中行获得行号
+                        var index = d.datagrid('getRowIndex');
+                        // 根据行号删除
+                        d.datagrid('deleteRow',index);
+                    }
+                }],
+                onDblClickRow: function (rowIndex, rowData) {
+                    //双击开启编辑行
+                    d.datagrid("beginEdit", rowIndex);
+                    //设定当失去焦点时,退出编辑状态
+                    var valueName = rowData.valueName;
+                    $("input.datagrid-editable-input").val(valueName).bind("blur",function(evt){
+                        d.datagrid('endEdit',rowIndex);
+                    });
+                }
+        });
+        }
+        
+    </script>
+</body>
+</html>
