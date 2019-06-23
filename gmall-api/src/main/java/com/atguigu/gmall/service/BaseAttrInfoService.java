@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface BaseAttrInfoService {
     public List<BaseAttrInfo> getAttrListByCtg3(String catalog3Id);
+
+    void saveAttr(BaseAttrInfo baseAttrInfo);
 }

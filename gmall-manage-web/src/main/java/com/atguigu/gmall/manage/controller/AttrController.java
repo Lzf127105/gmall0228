@@ -19,10 +19,24 @@ public class AttrController {
     @Reference
     BaseAttrInfoService baseAttrInfoService;
 
+    /**
+     * 查询属性信息列表
+     */
     @RequestMapping("/getAttrListByCtg3")
     @ResponseBody
     public List<BaseAttrInfo> getAttrListByCtg3(String catalog3Id){
         List<BaseAttrInfo> baseAttrInfoList = baseAttrInfoService.getAttrListByCtg3(catalog3Id);
         return baseAttrInfoList;
+    }
+
+
+    /**
+     * 保存属性
+     */
+    @RequestMapping("saveAttr")
+    @ResponseBody
+    public String saveAttr(BaseAttrInfo baseAttrInfo){
+        baseAttrInfoService.saveAttr(baseAttrInfo);
+        return "sucess";
     }
 }
